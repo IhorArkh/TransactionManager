@@ -1,5 +1,4 @@
-﻿using System.Transactions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TransactionManager.Domain;
 using TransactionManager.Persistence.EntityConfigurations;
 

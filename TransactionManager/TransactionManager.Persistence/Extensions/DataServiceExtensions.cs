@@ -9,6 +9,8 @@ public static class DataServiceExtensions
     {
         services.AddDbContext<DataContext>(opt => { opt.UseSqlServer(connectionString); });
 
+        services.AddSingleton<DapperContext>(provider => new DapperContext(connectionString));
+
         return services;
     }
 }

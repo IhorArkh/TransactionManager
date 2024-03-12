@@ -1,3 +1,6 @@
+using TransactionManager.Application.Interfaces;
+using TransactionManager.Application.Services;
+using TransactionManager.Application.TransactionRecord.Commands.AddTransactionRecord;
 using TransactionManager.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,8 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddControllers();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                       throw new ApplicationException("Connection string is null.");
 builder.Services.AddDataServices(connectionString);
+builder.Services.AddMediatR(x =>
+    x.RegisterServicesFromAssembly(typeof(AddTransactionRecordCommand).Assembly));
+builder.Services.AddScoped<ICsvHelperService, CsvHelperService>();
 
 var app = builder.Build();
 
