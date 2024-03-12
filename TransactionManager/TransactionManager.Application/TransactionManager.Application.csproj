@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\TransactionManager.Domain\TransactionManager.Domain.csproj" />
+      <ProjectReference Include="..\TransactionManager.Persistence\TransactionManager.Persistence.csproj" />
+    </ItemGroup>
+
 </Project>
