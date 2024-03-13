@@ -21,7 +21,7 @@ public class DapperContext
 
     public async Task AddTransactionRecords(IEnumerable<TransactionRecord> transactionRecords)
     {
-        using (IDbConnection connection = CreateConnection())
+        using (var connection = CreateConnection())
         {
             connection.Open();
 
@@ -39,6 +39,29 @@ public class DapperContext
                         VALUES (source.TransactionRecordId, source.Name, source.Email, source.Amount, source.TransactionDate, source.ClientLocation);
                 ", record);
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+    }
+
+    public async Task<IEnumerable<TransactionRecord>> GetTransactionRecordsByYear(int year)
+    {
+        using (var connection = CreateConnection())
+        {
+            connection.Open();
+
+            try
+            {
+                var transactions = await connection.QueryAsync<TransactionRecord>(@"
+                    SELECT *
+                    FROM TransactionRecords
+                    WHERE YEAR(TransactionDate) = @Year OR (YEAR(TransactionDate) = @PrevYear AND MONTH(TransactionDate) = 12 AND DAY(TransactionDate) = 31)
+                ", new { Year = year, PrevYear = year - 1 });
+
+                return transactions;
             }
             catch (Exception ex)
             {

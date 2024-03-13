@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using CsvHelper.Configuration;
 
-namespace TransactionManager.Application.Services.Mapping;
+namespace TransactionManager.Application.Services.CsvHelperService.Mapping;
 
 public class TransactionRecordReadMap : ClassMap<Domain.TransactionRecord>
 {

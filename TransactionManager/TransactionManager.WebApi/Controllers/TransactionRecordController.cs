@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TransactionManager.Application.Interfaces;
 using TransactionManager.Application.TransactionRecord.Commands.AddTransactionRecord;
+using TransactionManager.Application.TransactionRecord.Queries.GetTransactionRecordsInClientLocalTime;
 
 namespace TransactionManager.WebApi.Controllers;
 
@@ -21,5 +22,13 @@ public class TransactionRecordController : ControllerBase
     {
         await _mediator.Send(new AddTransactionRecordCommand { File = file });
         return Ok();
+    }
+
+    [HttpGet("inClientTime/{year}")]
+    public async Task<IActionResult> GetTransactionRecordsInClientsTimeByYear(int year)
+    {
+        var result = await _mediator.Send(new GetTransactionRecordsInClientLocalTimeQuery { Year = year });
+
+        return File(result, "text/csv", "transactionRecords.csv");
     }
 }

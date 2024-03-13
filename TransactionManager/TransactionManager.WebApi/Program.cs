@@ -1,5 +1,6 @@
 using TransactionManager.Application.Interfaces;
 using TransactionManager.Application.Services;
+using TransactionManager.Application.Services.CsvHelperService;
 using TransactionManager.Application.TransactionRecord.Commands.AddTransactionRecord;
 using TransactionManager.Persistence.Extensions;
 
@@ -18,6 +19,7 @@ builder.Services.AddDataServices(connectionString);
 builder.Services.AddMediatR(x =>
     x.RegisterServicesFromAssembly(typeof(AddTransactionRecordCommand).Assembly));
 builder.Services.AddScoped<ICsvHelperService, CsvHelperService>();
+builder.Services.AddScoped<ITransactionRecordsTimeZoneService, TransactionRecordsTimeZoneService>();
 
 var app = builder.Build();
 

@@ -1,7 +1,9 @@
-﻿namespace TransactionManager.Application.Interfaces;
+﻿using System.Collections;
+
+namespace TransactionManager.Application.Interfaces;
 
 public interface ICsvHelperService
 {
-    public IEnumerable<T> ReadCsv<T>(Stream file);
-    public byte[] WriteToCsv<T>(IEnumerable<T> data);
+    IEnumerable<T> ReadCsv<T>(Stream file);
+    byte[] WriteToCsv(IEnumerable data);
 }
