@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TransactionManager.Application.Interfaces;
 using TransactionManager.Application.TransactionRecord.Commands.AddTransactionRecord;
 using TransactionManager.Application.TransactionRecord.Queries.GetTransactionRecordsInClientLocalTime;
+using TransactionManager.Application.TransactionRecord.Queries.GetTransactionsOccuredInUsersTimeZone;
 
 namespace TransactionManager.WebApi.Controllers;
 
@@ -12,24 +12,47 @@ public class TransactionRecordController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public TransactionRecordController(ICsvHelperService csvHelperService, IMediator mediator)
+    public TransactionRecordController(IMediator mediator)
     {
         _mediator = mediator;
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddTransactionRecords(IFormFile file)
+    public async Task<IActionResult> AddTransactions(IFormFile file)
     {
         await _mediator.Send(new AddTransactionRecordCommand { File = file });
         return Ok();
     }
 
-    [HttpGet("inClientTime/{year}/{month}")]
-    public async Task<IActionResult> GetTransactionRecordsInClientsTime(int year, int month = default)
+    [HttpGet("inClientsTimeZone/{year}/{month}")]
+    public async Task<IActionResult> GetTransactionsOccuredInClientsTimeZone(int year, int month = default)
     {
         var result =
-            await _mediator.Send(new GetTransactionRecordsInClientLocalTimeQuery { Year = year, Month = month });
+            await _mediator.Send(new GetTransactionsOccuredInClientsTimeZoneQuery { Year = year, Month = month });
 
-        return File(result, "text/csv", "transactionRecords.csv");
+        string fileName;
+
+        if (month == default)
+            fileName = $"Transactions occured in clients timezone {year}.csv";
+        else
+            fileName = $"Transactions occured in clients timezone {month}/{year}.csv";
+
+        return File(result, "text/csv", fileName);
+    }
+
+    [HttpGet("inUsersTimeZone/{year}/{month}")]
+    public async Task<IActionResult> GetTransactionsOccuredInUsersTimeZoneQuery(int year, int month = default)
+    {
+        var result =
+            await _mediator.Send(new GetTransactionsOccuredInUsersTimeZoneQuery() { Year = year, Month = month });
+
+        string fileName;
+
+        if (month == default)
+            fileName = $"Transactions occured in your timezone {year}.csv";
+        else
+            fileName = $"Transactions occured in your timezone {month}/{year}.csv";
+
+        return File(result, "text/csv", fileName);
     }
 }

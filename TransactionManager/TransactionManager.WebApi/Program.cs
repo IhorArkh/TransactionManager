@@ -1,6 +1,7 @@
 using TransactionManager.Application.Interfaces;
 using TransactionManager.Application.Services;
 using TransactionManager.Application.Services.CsvHelperService;
+using TransactionManager.Application.Services.LocationService;
 using TransactionManager.Application.TransactionRecord.Commands.AddTransactionRecord;
 using TransactionManager.Persistence.Extensions;
 
@@ -21,6 +22,10 @@ builder.Services.AddMediatR(x =>
 builder.Services.AddScoped<ICsvHelperService, CsvHelperService>();
 builder.Services.AddScoped<ITransactionRecordsService, TransactionRecordsService>();
 builder.Services.AddScoped<ITimeZoneService, TimeZoneService>();
+
+string ipInfoToken = builder.Configuration["IpInfoToken"] ??
+                     throw new ApplicationException("Connection string is null.");
+builder.Services.AddScoped<ILocationService>(provider => new LocationService(ipInfoToken));
 
 var app = builder.Build();
 

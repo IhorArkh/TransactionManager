@@ -4,23 +4,24 @@ using TransactionManager.Application.Interfaces;
 namespace TransactionManager.Application.TransactionRecord.Queries.GetTransactionRecordsInClientLocalTime;
 
 public class
-    GetTransactionRecordsInClientLocalTimeHandler : IRequestHandler<GetTransactionRecordsInClientLocalTimeQuery, byte[]>
+    GetTransactionsOccuredInClientsTimeZoneHandler : IRequestHandler<GetTransactionsOccuredInClientsTimeZoneQuery, byte
+    []>
 {
     private readonly ICsvHelperService _csvHelperService;
     private readonly ITransactionRecordsService _transactionRecordsService;
 
-    public GetTransactionRecordsInClientLocalTimeHandler(ICsvHelperService csvHelperService,
+    public GetTransactionsOccuredInClientsTimeZoneHandler(ICsvHelperService csvHelperService,
         ITransactionRecordsService transactionRecordsService)
     {
         _csvHelperService = csvHelperService;
         _transactionRecordsService = transactionRecordsService;
     }
 
-    public async Task<byte[]> Handle(GetTransactionRecordsInClientLocalTimeQuery request,
+    public async Task<byte[]> Handle(GetTransactionsOccuredInClientsTimeZoneQuery request,
         CancellationToken cancellationToken)
     {
         var transactionsRecords = await _transactionRecordsService
-            .GetTransactionRecordsInClientLocalTime(request.Year, request.Month);
+            .GetTransactionsOccuredInClientsTimeZone(request.Year, request.Month);
 
         return _csvHelperService.WriteToCsv(transactionsRecords);
     }

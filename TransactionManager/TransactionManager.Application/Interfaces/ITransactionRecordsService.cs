@@ -2,5 +2,6 @@
 
 public interface ITransactionRecordsService
 {
-    Task<IEnumerable<Domain.TransactionRecord>> GetTransactionRecordsInClientLocalTime(int year, int month = 0);
+    Task<IEnumerable<Domain.TransactionRecord>> GetTransactionsOccuredInClientsTimeZone(int year, int month = default);
+    Task<IEnumerable<Domain.TransactionRecord>> GetTransactionsOccuredInUsersTimeZone(int year, int month = default);
 }
