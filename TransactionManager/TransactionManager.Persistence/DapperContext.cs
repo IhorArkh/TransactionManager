@@ -47,7 +47,7 @@ public class DapperContext
         }
     }
 
-    public async Task<IEnumerable<TransactionRecord>> GetTransactionRecordsByYear(int year)
+    public async Task<IEnumerable<TransactionRecord>> GetTransactionsByYear(int year)
     {
         using (var connection = CreateConnection())
         {
@@ -55,11 +55,15 @@ public class DapperContext
 
             try
             {
+                // 2 day of month instead of 1 required because of 00:00:00 default DateTime
+                var lastDayOfPrevYear = new DateTime(year - 1, 12, 31);
+                var firstDayOfNextYear = new DateTime(year + 1, 1, 2);
+
                 var transactions = await connection.QueryAsync<TransactionRecord>(@"
                     SELECT *
                     FROM TransactionRecords
-                    WHERE YEAR(TransactionDate) = @Year OR (YEAR(TransactionDate) = @PrevYear AND MONTH(TransactionDate) = 12 AND DAY(TransactionDate) = 31)
-                ", new { Year = year, PrevYear = year - 1 });
+                    WHERE (TransactionDate >= @LastDayOfPrevYear AND TransactionDate <= @firstDayOfNextYear);
+                ", new { LastDayOfPrevYear = lastDayOfPrevYear, FirstDayOfNextYear = firstDayOfNextYear });
 
                 return transactions;
             }
@@ -70,7 +74,7 @@ public class DapperContext
         }
     }
 
-    public async Task<IEnumerable<TransactionRecord>> GetTransactionRecordsByMonth(int year, int month)
+    public async Task<IEnumerable<TransactionRecord>> GetTransactionsByMonth(int year, int month)
     {
         if (month == default)
             throw new Exception("Error during getting transactionRecords by month. Month is default.");
@@ -81,20 +85,15 @@ public class DapperContext
 
             try
             {
+                // 2 day of month instead of 1 required because of 00:00:00 default DateTime
+                var firstDayOfNextMonth = new DateTime(year, month + 1, 2);
                 var lastDayOfPrevMonth = new DateTime(year, month, 1).AddDays(-1);
 
                 var transactions = await connection.QueryAsync<TransactionRecord>(@"
-                SELECT *
-                FROM TransactionRecords
-                WHERE 
-                    (YEAR(TransactionDate) = @Year AND MONTH(TransactionDate) = @Month) OR
-                    (YEAR(TransactionDate) = @PrevYear AND MONTH(TransactionDate) = @PrevMonth AND DAY(TransactionDate) = 31)
-            ",
-                    new
-                    {
-                        Year = year, Month = month, PrevYear = lastDayOfPrevMonth.Year,
-                        PrevMonth = lastDayOfPrevMonth.Month
-                    });
+                    SELECT *
+                    FROM TransactionRecords
+                    WHERE (TransactionDate >= @LastDayOfPrevMonth AND TransactionDate <= @FirstDayOfNextMonth);
+                ", new { FirstDayOfNextMonth = firstDayOfNextMonth, LastDayOfPrevMonth = lastDayOfPrevMonth });
 
                 return transactions;
             }

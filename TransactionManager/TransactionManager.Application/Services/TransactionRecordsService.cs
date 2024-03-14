@@ -22,8 +22,8 @@ public class TransactionRecordsService : ITransactionRecordsService
         int month = default)
     {
         var transactions = month == default
-            ? await _dapperContext.GetTransactionRecordsByYear(year)
-            : await _dapperContext.GetTransactionRecordsByMonth(year, month);
+            ? await _dapperContext.GetTransactionsByYear(year)
+            : await _dapperContext.GetTransactionsByMonth(year, month);
 
         var validTransactions = new List<Domain.TransactionRecord>();
 
@@ -50,8 +50,8 @@ public class TransactionRecordsService : ITransactionRecordsService
         int month = default)
     {
         var transactions = month == default
-            ? await _dapperContext.GetTransactionRecordsByYear(year)
-            : await _dapperContext.GetTransactionRecordsByMonth(year, month);
+            ? await _dapperContext.GetTransactionsByYear(year)
+            : await _dapperContext.GetTransactionsByMonth(year, month);
 
         var validTransactions = new List<Domain.TransactionRecord>();
 
