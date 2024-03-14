@@ -1,7 +1,12 @@
-﻿namespace TransactionManager.Application.Interfaces;
+﻿using TransactionManager.Application.TransactionRecord.Queries.DTOs;
+
+namespace TransactionManager.Application.Interfaces;
 
 public interface ITransactionRecordsService
 {
-    Task<IEnumerable<Domain.TransactionRecord>> GetTransactionsOccuredInClientsTimeZone(int year, int month = default);
-    Task<IEnumerable<Domain.TransactionRecord>> GetTransactionsOccuredInUsersTimeZone(int year, int month = default);
+    Task<IEnumerable<TransactionOccuredInClientsTimeZoneDto>> GetTransactionsOccuredInClientsTimeZone(int year,
+        int month = default);
+
+    Task<IEnumerable<TransactionOccuredInUsersTimeZoneDto>> GetTransactionsOccuredInUsersTimeZone(int year,
+        int month = default);
 }

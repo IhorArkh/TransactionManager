@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using TransactionManager.Application.Interfaces;
+using TransactionManager.Application.Services.CsvHelperService.Mapping;
 
 namespace TransactionManager.Application.TransactionRecord.Queries.GetTransactionsOccuredInUsersTimeZone;
 
@@ -22,6 +23,6 @@ public class GetTransactionsOccuredInUsersTimeZoneHandler :
         var transactionsRecords =
             await _transactionRecordsService.GetTransactionsOccuredInUsersTimeZone(request.Year, request.Month);
 
-        return _csvHelperService.WriteToCsv(transactionsRecords);
+        return _csvHelperService.WriteToCsv(transactionsRecords, new TransactionInUsersTimeZoneWriteMap());
     }
 }

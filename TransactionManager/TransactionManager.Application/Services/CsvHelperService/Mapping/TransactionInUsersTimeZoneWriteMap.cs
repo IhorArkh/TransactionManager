@@ -1,11 +1,12 @@
 ﻿using System.Globalization;
 using CsvHelper.Configuration;
+using TransactionManager.Application.TransactionRecord.Queries.DTOs;
 
 namespace TransactionManager.Application.Services.CsvHelperService.Mapping;
 
-public class TransactRecordWriteMap : ClassMap<Domain.TransactionRecord>
+public class TransactionInUsersTimeZoneWriteMap : ClassMap<TransactionOccuredInUsersTimeZoneDto>
 {
-    public TransactRecordWriteMap()
+    public TransactionInUsersTimeZoneWriteMap()
     {
         Map(x => x.TransactionRecordId).Name("transaction_id");
         Map(x => x.Name).Name("name");
@@ -16,7 +17,8 @@ public class TransactRecordWriteMap : ClassMap<Domain.TransactionRecord>
             return "$" + amount.ToString(CultureInfo.GetCultureInfo("en-US"));
         });
 
-        Map(x => x.TransactionDate).Name("transaction_date");
+        Map(x => x.TransactionDate).Name("transaction_datetime_utc");
+        Map(x => x.YourDateTime).Name("your_datetime");
         Map(x => x.ClientLocation).Name("client_location");
     }
 }

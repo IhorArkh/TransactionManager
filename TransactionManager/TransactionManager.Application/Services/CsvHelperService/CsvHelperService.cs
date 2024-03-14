@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Globalization;
 using CsvHelper;
+using CsvHelper.Configuration;
 using TransactionManager.Application.Interfaces;
 using TransactionManager.Application.Services.CsvHelperService.Mapping;
 using Exception = System.Exception;
@@ -35,7 +36,7 @@ public class CsvHelperService : ICsvHelperService
         }
     }
 
-    public byte[] WriteToCsv(IEnumerable data)
+    public byte[] WriteToCsv(IEnumerable data, ClassMap classMap)
     {
         if (data is null)
         {
@@ -49,7 +50,7 @@ public class CsvHelperService : ICsvHelperService
             {
                 using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
                 {
-                    csvWriter.Context.RegisterClassMap<TransactRecordWriteMap>();
+                    csvWriter.Context.RegisterClassMap(classMap);
                     csvWriter.WriteRecords(data);
                 }
             }

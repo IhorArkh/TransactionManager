@@ -15,7 +15,6 @@ public class TransactionRecordReadMap : ClassMap<Domain.TransactionRecord>
             string amount = x.Row.GetField<string>("amount").Remove(0, 1);
             return Convert.ToDecimal(amount, CultureInfo.GetCultureInfo("en-US"));
         });
-        
         Map(x => x.TransactionDate).Name("transaction_date");
         Map(x => x.ClientLocation).Name("client_location");
     }

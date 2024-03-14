@@ -10,7 +10,7 @@ public class TimeZoneService : ITimeZoneService
     {
         string tzIana = TimeZoneLookup.GetTimeZone(lat, lng).Result;
         TimeZoneInfo tzInfo = TZConvert.GetTimeZoneInfo(tzIana);
-        DateTimeOffset convertedTime = TimeZoneInfo.ConvertTime(utcDateTime, tzInfo);
+        DateTimeOffset convertedTime = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, tzInfo);
 
         return convertedTime;
     }

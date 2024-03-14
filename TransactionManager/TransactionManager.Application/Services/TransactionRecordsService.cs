@@ -1,5 +1,6 @@
 ﻿using TransactionManager.Application.Extensions;
 using TransactionManager.Application.Interfaces;
+using TransactionManager.Application.TransactionRecord.Queries.DTOs;
 using TransactionManager.Persistence;
 
 namespace TransactionManager.Application.Services;
@@ -18,16 +19,28 @@ public class TransactionRecordsService : ITransactionRecordsService
         _locationService = locationService;
     }
 
-    public async Task<IEnumerable<Domain.TransactionRecord>> GetTransactionsOccuredInClientsTimeZone(int year,
+    public async Task<IEnumerable<TransactionOccuredInClientsTimeZoneDto>> GetTransactionsOccuredInClientsTimeZone(
+        int year,
         int month = default)
     {
         var transactions = month == default
             ? await _dapperContext.GetTransactionsByYear(year)
             : await _dapperContext.GetTransactionsByMonth(year, month);
 
-        var validTransactions = new List<Domain.TransactionRecord>();
+        var transactionDtos = transactions.Select(x =>
+            new TransactionOccuredInClientsTimeZoneDto
+            {
+                TransactionRecordId = x.TransactionRecordId,
+                Amount = x.Amount,
+                ClientLocation = x.ClientLocation,
+                Email = x.Email,
+                Name = x.Name,
+                TransactionDate = x.TransactionDate
+            }).ToList();
 
-        foreach (var transaction in transactions)
+        var validTransactions = new List<TransactionOccuredInClientsTimeZoneDto>();
+
+        foreach (var transaction in transactionDtos)
         {
             var coordinates = transaction.ClientLocation.SplitCoordinatesIntoDouble();
 
@@ -38,22 +51,39 @@ public class TransactionRecordsService : ITransactionRecordsService
                 coordinates.lat, coordinates.lng);
 
             if (convertedTime.Year == year && month == default)
+            {
+                transaction.ClientsDateTime = convertedTime.DateTime;
                 validTransactions.Add(transaction);
+            }
             else if (convertedTime.Year == year && convertedTime.Month == month)
+            {
+                transaction.ClientsDateTime = convertedTime.DateTime;
                 validTransactions.Add(transaction);
+            }
         }
 
         return validTransactions;
     }
 
-    public async Task<IEnumerable<Domain.TransactionRecord>> GetTransactionsOccuredInUsersTimeZone(int year,
+    public async Task<IEnumerable<TransactionOccuredInUsersTimeZoneDto>> GetTransactionsOccuredInUsersTimeZone(int year,
         int month = default)
     {
         var transactions = month == default
             ? await _dapperContext.GetTransactionsByYear(year)
             : await _dapperContext.GetTransactionsByMonth(year, month);
 
-        var validTransactions = new List<Domain.TransactionRecord>();
+        var transactionDtos = transactions.Select(x =>
+            new TransactionOccuredInUsersTimeZoneDto
+            {
+                TransactionRecordId = x.TransactionRecordId,
+                Amount = x.Amount,
+                ClientLocation = x.ClientLocation,
+                Email = x.Email,
+                Name = x.Name,
+                TransactionDate = x.TransactionDate
+            }).ToList();
+
+        var validTransactions = new List<TransactionOccuredInUsersTimeZoneDto>();
 
         var location = _locationService.GetLocationCoordinatesByIp();
 
@@ -61,15 +91,21 @@ public class TransactionRecordsService : ITransactionRecordsService
         if (coordinates.lat == default || coordinates.lng == default)
             throw new Exception("Error during converting coordinates.");
 
-        foreach (var transaction in transactions)
+        foreach (var transaction in transactionDtos)
         {
             var convertedTime = _timeZoneService.GetLocalTimeByCoordinates(transaction.TransactionDate,
                 coordinates.lat, coordinates.lng);
 
             if (convertedTime.Year == year && month == default)
+            {
+                transaction.YourDateTime = convertedTime.DateTime;
                 validTransactions.Add(transaction);
+            }
             else if (convertedTime.Year == year && convertedTime.Month == month)
+            {
+                transaction.YourDateTime = convertedTime.DateTime;
                 validTransactions.Add(transaction);
+            }
         }
 
         return validTransactions;
