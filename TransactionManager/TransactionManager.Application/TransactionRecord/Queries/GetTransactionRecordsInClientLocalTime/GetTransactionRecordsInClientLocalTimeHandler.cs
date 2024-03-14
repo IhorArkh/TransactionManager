@@ -7,20 +7,20 @@ public class
     GetTransactionRecordsInClientLocalTimeHandler : IRequestHandler<GetTransactionRecordsInClientLocalTimeQuery, byte[]>
 {
     private readonly ICsvHelperService _csvHelperService;
-    private readonly ITransactionRecordsTimeZoneService _transactionRecordsTimeZoneService;
+    private readonly ITransactionRecordsService _transactionRecordsService;
 
     public GetTransactionRecordsInClientLocalTimeHandler(ICsvHelperService csvHelperService,
-        ITransactionRecordsTimeZoneService transactionRecordsTimeZoneService)
+        ITransactionRecordsService transactionRecordsService)
     {
         _csvHelperService = csvHelperService;
-        _transactionRecordsTimeZoneService = transactionRecordsTimeZoneService;
+        _transactionRecordsService = transactionRecordsService;
     }
 
     public async Task<byte[]> Handle(GetTransactionRecordsInClientLocalTimeQuery request,
         CancellationToken cancellationToken)
     {
-        var transactionsRecords = await _transactionRecordsTimeZoneService
-            .GetTransactionRecordsInClientLocalTime(request.Year);
+        var transactionsRecords = await _transactionRecordsService
+            .GetTransactionRecordsInClientLocalTime(request.Year, request.Month);
 
         return _csvHelperService.WriteToCsv(transactionsRecords);
     }

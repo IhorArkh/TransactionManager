@@ -24,10 +24,11 @@ public class TransactionRecordController : ControllerBase
         return Ok();
     }
 
-    [HttpGet("inClientTime/{year}")]
-    public async Task<IActionResult> GetTransactionRecordsInClientsTimeByYear(int year)
+    [HttpGet("inClientTime/{year}/{month}")]
+    public async Task<IActionResult> GetTransactionRecordsInClientsTime(int year, int month = default)
     {
-        var result = await _mediator.Send(new GetTransactionRecordsInClientLocalTimeQuery { Year = year });
+        var result =
+            await _mediator.Send(new GetTransactionRecordsInClientLocalTimeQuery { Year = year, Month = month });
 
         return File(result, "text/csv", "transactionRecords.csv");
     }

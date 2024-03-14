@@ -5,4 +5,5 @@ namespace TransactionManager.Application.TransactionRecord.Queries.GetTransactio
 public class GetTransactionRecordsInClientLocalTimeQuery : IRequest<byte[]>
 {
     public int Year { get; set; }
+    public int Month { get; set; }
 }

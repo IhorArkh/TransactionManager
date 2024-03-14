@@ -69,4 +69,39 @@ public class DapperContext
             }
         }
     }
+
+    public async Task<IEnumerable<TransactionRecord>> GetTransactionRecordsByMonth(int year, int month)
+    {
+        if (month == default)
+            throw new Exception("Error during getting transactionRecords by month. Month is default.");
+
+        using (var connection = CreateConnection())
+        {
+            connection.Open();
+
+            try
+            {
+                var lastDayOfPrevMonth = new DateTime(year, month, 1).AddDays(-1);
+
+                var transactions = await connection.QueryAsync<TransactionRecord>(@"
+                SELECT *
+                FROM TransactionRecords
+                WHERE 
+                    (YEAR(TransactionDate) = @Year AND MONTH(TransactionDate) = @Month) OR
+                    (YEAR(TransactionDate) = @PrevYear AND MONTH(TransactionDate) = @PrevMonth AND DAY(TransactionDate) = 31)
+            ",
+                    new
+                    {
+                        Year = year, Month = month, PrevYear = lastDayOfPrevMonth.Year,
+                        PrevMonth = lastDayOfPrevMonth.Month
+                    });
+
+                return transactions;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+    }
 }

@@ -19,7 +19,8 @@ builder.Services.AddDataServices(connectionString);
 builder.Services.AddMediatR(x =>
     x.RegisterServicesFromAssembly(typeof(AddTransactionRecordCommand).Assembly));
 builder.Services.AddScoped<ICsvHelperService, CsvHelperService>();
-builder.Services.AddScoped<ITransactionRecordsTimeZoneService, TransactionRecordsTimeZoneService>();
+builder.Services.AddScoped<ITransactionRecordsService, TransactionRecordsService>();
+builder.Services.AddScoped<ITimeZoneService, TimeZoneService>();
 
 var app = builder.Build();
 
