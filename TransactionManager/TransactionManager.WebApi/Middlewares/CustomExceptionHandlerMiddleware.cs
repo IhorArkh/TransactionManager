@@ -38,7 +38,7 @@ public class CustomExceptionHandlerMiddleware
                 break;
         }
 
-        context.Response.ContentType = "application/json";
+        context.Response.ContentType = "text/plain";
         context.Response.StatusCode = (int)code;
 
         if (result == string.Empty)

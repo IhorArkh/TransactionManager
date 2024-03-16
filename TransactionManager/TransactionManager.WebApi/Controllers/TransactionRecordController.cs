@@ -17,6 +17,11 @@ public class TransactionRecordController : ControllerBase
         _mediator = mediator;
     }
 
+    /// <summary>
+    /// Adds transactions from CSV to database.
+    /// </summary>
+    /// <response code="200">Added successfully.</response>
+    /// <response code="400">If file not provided.</response>
     [HttpPost]
     public async Task<IActionResult> AddTransactions(IFormFile file)
     {
@@ -24,6 +29,10 @@ public class TransactionRecordController : ControllerBase
         return Ok();
     }
 
+    /// <summary>
+    /// Get CSV file with transactions occured in clients time zone by year or month.
+    /// </summary>
+    /// <response code="200">Returns file with filtered transactions if any exists.</response>
     [HttpGet("inClientsTimeZone/{year}/{month}")]
     public async Task<IActionResult> GetTransactionsOccuredInClientsTimeZone(int year, int month = default)
     {
@@ -40,6 +49,11 @@ public class TransactionRecordController : ControllerBase
         return File(result, "text/csv", fileName);
     }
 
+    /// <summary>
+    /// Get CSV file with transactions occured in your time zone  by year or month.
+    /// </summary>
+    /// <response code="200">Returns file with filtered transactions if any exists.</response>
+    /// /// <response code="400">If occurs error during getting your location coordinates.</response>
     [HttpGet("inUsersTimeZone/{year}/{month}")]
     public async Task<IActionResult> GetTransactionsOccuredInUsersTimeZoneQuery(int year, int month = default)
     {
