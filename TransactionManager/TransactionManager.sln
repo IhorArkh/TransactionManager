@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.WebApi", "TransactionManager.WebApi\TransactionManager.WebApi.csproj", "{73B2B16B-7CC0-4045-A825-6FB42CD70E59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Application", "TransactionManager.Application\TransactionManager.Application.csproj", "{CE0F8405-538C-4A25-A6D9-CA019FDB6FBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Persistence", "TransactionManager.Persistence\TransactionManager.Persistence.csproj", "{5DDE5EB7-1F22-4651-8BFB-346187E6759C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Domain", "TransactionManager.Domain\TransactionManager.Domain.csproj", "{D225042B-4DDB-47DD-8F5E-35DBD485F08E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{73B2B16B-7CC0-4045-A825-6FB42CD70E59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B2B16B-7CC0-4045-A825-6FB42CD70E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73B2B16B-7CC0-4045-A825-6FB42CD70E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73B2B16B-7CC0-4045-A825-6FB42CD70E59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE0F8405-538C-4A25-A6D9-CA019FDB6FBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE0F8405-538C-4A25-A6D9-CA019FDB6FBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE0F8405-538C-4A25-A6D9-CA019FDB6FBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE0F8405-538C-4A25-A6D9-CA019FDB6FBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DDE5EB7-1F22-4651-8BFB-346187E6759C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DDE5EB7-1F22-4651-8BFB-346187E6759C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DDE5EB7-1F22-4651-8BFB-346187E6759C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DDE5EB7-1F22-4651-8BFB-346187E6759C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D225042B-4DDB-47DD-8F5E-35DBD485F08E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D225042B-4DDB-47DD-8F5E-35DBD485F08E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D225042B-4DDB-47DD-8F5E-35DBD485F08E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D225042B-4DDB-47DD-8F5E-35DBD485F08E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
