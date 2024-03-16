@@ -8,6 +8,8 @@ public class TransactionRecordConfiguration : IEntityTypeConfiguration<Transacti
 {
     public void Configure(EntityTypeBuilder<TransactionRecord> builder)
     {
+        builder.HasKey(x => x.TransactionRecordId);
+
         builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(50);

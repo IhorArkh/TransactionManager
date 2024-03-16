@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TransactionManager.Application.TransactionRecord.Commands.AddTransactionRecord;
-using TransactionManager.Application.TransactionRecord.Queries.GetTransactionRecordsInClientLocalTime;
+using TransactionManager.Application.TransactionRecord.Queries.GetTransactionsOccuredInClientsTimeZone;
 using TransactionManager.Application.TransactionRecord.Queries.GetTransactionsOccuredInUsersTimeZone;
 
 namespace TransactionManager.WebApi.Controllers;

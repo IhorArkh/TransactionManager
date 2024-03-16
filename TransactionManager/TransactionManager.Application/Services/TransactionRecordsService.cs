@@ -1,4 +1,5 @@
-﻿using TransactionManager.Application.Extensions;
+﻿using TransactionManager.Application.Exceptions;
+using TransactionManager.Application.Extensions;
 using TransactionManager.Application.Interfaces;
 using TransactionManager.Application.TransactionRecord.Queries.DTOs;
 using TransactionManager.Persistence;
@@ -26,6 +27,9 @@ public class TransactionRecordsService : ITransactionRecordsService
         var transactions = month == default
             ? await _dapperContext.GetTransactionsByYear(year)
             : await _dapperContext.GetTransactionsByMonth(year, month);
+
+        if (transactions.Count() == default)
+            return new List<TransactionOccuredInClientsTimeZoneDto>();
 
         var transactionDtos = transactions.Select(x =>
             new TransactionOccuredInClientsTimeZoneDto
@@ -72,6 +76,9 @@ public class TransactionRecordsService : ITransactionRecordsService
             ? await _dapperContext.GetTransactionsByYear(year)
             : await _dapperContext.GetTransactionsByMonth(year, month);
 
+        if (transactions.Count() == default)
+            return new List<TransactionOccuredInUsersTimeZoneDto>();
+
         var transactionDtos = transactions.Select(x =>
             new TransactionOccuredInUsersTimeZoneDto
             {
@@ -86,6 +93,8 @@ public class TransactionRecordsService : ITransactionRecordsService
         var validTransactions = new List<TransactionOccuredInUsersTimeZoneDto>();
 
         var location = _locationService.GetLocationCoordinatesByIp();
+        if (location == default)
+            throw new GetLocationCoordinatesByIpException("Error during getting your location coordinates.");
 
         var coordinates = location.SplitCoordinatesIntoDouble();
         if (coordinates.lat == default || coordinates.lng == default)

@@ -2,6 +2,7 @@
 using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using TransactionManager.Application.Exceptions;
 using TransactionManager.Application.Interfaces;
 using TransactionManager.Application.Services.CsvHelperService.Mapping;
 using Exception = System.Exception;
@@ -32,34 +33,22 @@ public class CsvHelperService : ICsvHelperService
         }
         catch (Exception ex)
         {
-            throw new Exception(ex.Message);
+            throw new CsvHelperReadException(ex.Message);
         }
     }
 
     public byte[] WriteToCsv(IEnumerable data, ClassMap classMap)
     {
-        if (data is null)
+        using var memoryStream = new MemoryStream();
+        using (var streamWriter = new StreamWriter(memoryStream))
         {
-            throw new Exception("Error. Data is null.");
-        }
-
-        try
-        {
-            using var memoryStream = new MemoryStream();
-            using (var streamWriter = new StreamWriter(memoryStream))
+            using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
             {
-                using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
-                {
-                    csvWriter.Context.RegisterClassMap(classMap);
-                    csvWriter.WriteRecords(data);
-                }
+                csvWriter.Context.RegisterClassMap(classMap);
+                csvWriter.WriteRecords(data);
             }
+        }
 
-            return memoryStream.ToArray();
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
+        return memoryStream.ToArray();
     }
 }

@@ -4,6 +4,7 @@ using TransactionManager.Application.Services.CsvHelperService;
 using TransactionManager.Application.Services.LocationService;
 using TransactionManager.Application.TransactionRecord.Commands.AddTransactionRecord;
 using TransactionManager.Persistence.Extensions;
+using TransactionManager.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

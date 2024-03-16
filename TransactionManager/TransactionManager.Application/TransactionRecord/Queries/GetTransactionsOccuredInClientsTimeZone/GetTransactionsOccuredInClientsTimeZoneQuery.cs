@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TransactionManager.Application.TransactionRecord.Queries.GetTransactionRecordsInClientLocalTime;
+namespace TransactionManager.Application.TransactionRecord.Queries.GetTransactionsOccuredInClientsTimeZone;
 
 public class GetTransactionsOccuredInClientsTimeZoneQuery : IRequest<byte[]>
 {
