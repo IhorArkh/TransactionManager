@@ -26,16 +26,11 @@ public class CustomExceptionHandlerMiddleware
     {
         var code = HttpStatusCode.InternalServerError;
         var result = string.Empty;
-        switch (exception)
+
+        if (exception is BusinessLogicException)
         {
-            case CsvHelperReadException csvHelperReadException:
-                code = HttpStatusCode.BadRequest;
-                result = csvHelperReadException.Message;
-                break;
-            case GetLocationCoordinatesByIpException getLocationCoordinatesByIpException:
-                code = HttpStatusCode.BadRequest;
-                result = getLocationCoordinatesByIpException.Message;
-                break;
+            code = HttpStatusCode.BadRequest;
+            result = exception.Message;
         }
 
         context.Response.ContentType = "text/plain";
