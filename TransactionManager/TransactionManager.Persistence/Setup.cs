@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TransactionManager.Persistence.Extensions;
+namespace TransactionManager.Persistence;
 
-public static class DataServiceExtensions
+public static class Setup
 {
     public static IServiceCollection AddDataServices(this IServiceCollection services, string connectionString)
     {

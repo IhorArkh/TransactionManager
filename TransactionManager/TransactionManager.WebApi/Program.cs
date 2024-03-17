@@ -1,11 +1,11 @@
 using System.Reflection;
 using Microsoft.OpenApi.Models;
+using TransactionManager.Application.Features.TransactionRecord.Commands.AddTransactionRecord;
 using TransactionManager.Application.Interfaces;
 using TransactionManager.Application.Services;
 using TransactionManager.Application.Services.CsvHelperService;
 using TransactionManager.Application.Services.LocationService;
-using TransactionManager.Application.TransactionRecord.Commands.AddTransactionRecord;
-using TransactionManager.Persistence.Extensions;
+using TransactionManager.Persistence;
 using TransactionManager.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);

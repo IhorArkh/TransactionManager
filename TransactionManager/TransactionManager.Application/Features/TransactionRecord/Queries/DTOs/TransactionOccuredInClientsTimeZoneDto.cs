@@ -1,4 +1,4 @@
-﻿namespace TransactionManager.Application.TransactionRecord.Queries.DTOs;
+﻿namespace TransactionManager.Application.Features.TransactionRecord.Queries.DTOs;
 
 public class TransactionOccuredInClientsTimeZoneDto
 {

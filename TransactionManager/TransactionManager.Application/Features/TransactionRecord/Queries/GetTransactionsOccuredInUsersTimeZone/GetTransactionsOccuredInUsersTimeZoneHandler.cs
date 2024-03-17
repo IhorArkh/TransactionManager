@@ -2,7 +2,7 @@
 using TransactionManager.Application.Interfaces;
 using TransactionManager.Application.Services.CsvHelperService.Mapping;
 
-namespace TransactionManager.Application.TransactionRecord.Queries.GetTransactionsOccuredInUsersTimeZone;
+namespace TransactionManager.Application.Features.TransactionRecord.Queries.GetTransactionsOccuredInUsersTimeZone;
 
 public class GetTransactionsOccuredInUsersTimeZoneHandler :
     IRequestHandler<GetTransactionsOccuredInUsersTimeZoneQuery, byte[]>

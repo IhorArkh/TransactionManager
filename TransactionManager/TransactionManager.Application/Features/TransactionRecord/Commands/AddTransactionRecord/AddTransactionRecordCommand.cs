@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace TransactionManager.Application.TransactionRecord.Commands.AddTransactionRecord;
+namespace TransactionManager.Application.Features.TransactionRecord.Commands.AddTransactionRecord;
 
 public class AddTransactionRecordCommand : IRequest
 {

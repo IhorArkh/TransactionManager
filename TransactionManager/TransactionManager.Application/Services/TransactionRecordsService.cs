@@ -1,7 +1,7 @@
 ﻿using TransactionManager.Application.Exceptions;
 using TransactionManager.Application.Extensions;
+using TransactionManager.Application.Features.TransactionRecord.Queries.DTOs;
 using TransactionManager.Application.Interfaces;
-using TransactionManager.Application.TransactionRecord.Queries.DTOs;
 using TransactionManager.Persistence;
 
 namespace TransactionManager.Application.Services;
