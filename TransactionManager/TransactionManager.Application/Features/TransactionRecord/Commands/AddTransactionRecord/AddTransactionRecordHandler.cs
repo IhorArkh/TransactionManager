@@ -2,7 +2,7 @@
 using TransactionManager.Application.Interfaces;
 using TransactionManager.Persistence;
 
-namespace TransactionManager.Application.TransactionRecord.Commands.AddTransactionRecord;
+namespace TransactionManager.Application.Features.TransactionRecord.Commands.AddTransactionRecord;
 
 public class AddTransactionRecordHandler : IRequestHandler<AddTransactionRecordCommand>
 {

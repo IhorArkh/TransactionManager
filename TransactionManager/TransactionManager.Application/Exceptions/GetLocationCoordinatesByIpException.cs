@@ -1,6 +1,6 @@
 ﻿namespace TransactionManager.Application.Exceptions;
 
-public class GetLocationCoordinatesByIpException : Exception
+public class GetLocationCoordinatesByIpException : BusinessLogicException
 {
     public GetLocationCoordinatesByIpException(string message) : base(message)
     {

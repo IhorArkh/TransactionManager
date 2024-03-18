@@ -1,7 +1,7 @@
 ﻿using TransactionManager.Application.Exceptions;
 using TransactionManager.Application.Extensions;
+using TransactionManager.Application.Features.TransactionRecord.Queries.DTOs;
 using TransactionManager.Application.Interfaces;
-using TransactionManager.Application.TransactionRecord.Queries.DTOs;
 using TransactionManager.Persistence;
 
 namespace TransactionManager.Application.Services;
@@ -49,7 +49,7 @@ public class TransactionRecordsService : ITransactionRecordsService
             var coordinates = transaction.ClientLocation.SplitCoordinatesIntoDouble();
 
             if (coordinates.lat == default || coordinates.lng == default)
-                throw new Exception("Error during converting coordinates.");
+                throw new BusinessLogicException("Error during converting coordinates.");
 
             var convertedTime = _timeZoneService.GetLocalTimeByCoordinates(transaction.TransactionDate,
                 coordinates.lat, coordinates.lng);
@@ -98,7 +98,7 @@ public class TransactionRecordsService : ITransactionRecordsService
 
         var coordinates = location.SplitCoordinatesIntoDouble();
         if (coordinates.lat == default || coordinates.lng == default)
-            throw new Exception("Error during converting coordinates.");
+            throw new BusinessLogicException("Error during converting coordinates.");
 
         foreach (var transaction in transactionDtos)
         {

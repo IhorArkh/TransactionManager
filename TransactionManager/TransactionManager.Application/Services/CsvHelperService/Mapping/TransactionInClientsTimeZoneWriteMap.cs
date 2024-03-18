@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using CsvHelper.Configuration;
-using TransactionManager.Application.TransactionRecord.Queries.DTOs;
+using TransactionManager.Application.Features.TransactionRecord.Queries.DTOs;
 
 namespace TransactionManager.Application.Services.CsvHelperService.Mapping;
 

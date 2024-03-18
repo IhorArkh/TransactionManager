@@ -2,7 +2,7 @@
 using TransactionManager.Application.Interfaces;
 using TransactionManager.Application.Services.CsvHelperService.Mapping;
 
-namespace TransactionManager.Application.TransactionRecord.Queries.GetTransactionsOccuredInUsersTimeZone;
+namespace TransactionManager.Application.Features.TransactionRecord.Queries.GetTransactionsOccuredInUsersTimeZone;
 
 public class GetTransactionsOccuredInUsersTimeZoneHandler :
     IRequestHandler<GetTransactionsOccuredInUsersTimeZoneQuery, byte[]>
@@ -23,6 +23,6 @@ public class GetTransactionsOccuredInUsersTimeZoneHandler :
         var transactionsRecords =
             await _transactionRecordsService.GetTransactionsOccuredInUsersTimeZone(request.Year, request.Month);
 
-        return _csvHelperService.WriteToCsv(transactionsRecords, new TransactionInUsersTimeZoneWriteMap());
+        return await _csvHelperService.WriteToCsvAsync(transactionsRecords, new TransactionInUsersTimeZoneWriteMap());
     }
 }
