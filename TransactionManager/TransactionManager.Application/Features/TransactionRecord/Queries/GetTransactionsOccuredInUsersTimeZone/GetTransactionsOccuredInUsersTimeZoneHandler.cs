@@ -23,6 +23,6 @@ public class GetTransactionsOccuredInUsersTimeZoneHandler :
         var transactionsRecords =
             await _transactionRecordsService.GetTransactionsOccuredInUsersTimeZone(request.Year, request.Month);
 
-        return _csvHelperService.WriteToCsv(transactionsRecords, new TransactionInUsersTimeZoneWriteMap());
+        return await _csvHelperService.WriteToCsvAsync(transactionsRecords, new TransactionInUsersTimeZoneWriteMap());
     }
 }

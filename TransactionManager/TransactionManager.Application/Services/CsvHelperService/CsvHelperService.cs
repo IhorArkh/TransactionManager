@@ -37,15 +37,15 @@ public class CsvHelperService : ICsvHelperService
         }
     }
 
-    public byte[] WriteToCsv(IEnumerable data, ClassMap classMap)
+    public async Task<byte[]> WriteToCsvAsync(IEnumerable data, ClassMap classMap)
     {
         using var memoryStream = new MemoryStream();
-        using (var streamWriter = new StreamWriter(memoryStream))
+        await using (var streamWriter = new StreamWriter(memoryStream))
         {
-            using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+            await using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
             {
                 csvWriter.Context.RegisterClassMap(classMap);
-                csvWriter.WriteRecords(data);
+                await csvWriter.WriteRecordsAsync(data);
             }
         }
 

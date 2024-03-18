@@ -5,25 +5,26 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>CS8618</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.2"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TransactionManager.Application\TransactionManager.Application.csproj" />
-      <ProjectReference Include="..\TransactionManager.Domain\TransactionManager.Domain.csproj" />
-      <ProjectReference Include="..\TransactionManager.Persistence\TransactionManager.Persistence.csproj" />
+        <ProjectReference Include="..\TransactionManager.Application\TransactionManager.Application.csproj"/>
+        <ProjectReference Include="..\TransactionManager.Domain\TransactionManager.Domain.csproj"/>
+        <ProjectReference Include="..\TransactionManager.Persistence\TransactionManager.Persistence.csproj"/>
     </ItemGroup>
 
 </Project>

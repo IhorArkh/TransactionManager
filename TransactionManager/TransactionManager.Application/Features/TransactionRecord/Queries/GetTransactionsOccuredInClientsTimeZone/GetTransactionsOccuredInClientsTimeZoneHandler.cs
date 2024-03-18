@@ -4,9 +4,8 @@ using TransactionManager.Application.Services.CsvHelperService.Mapping;
 
 namespace TransactionManager.Application.Features.TransactionRecord.Queries.GetTransactionsOccuredInClientsTimeZone;
 
-public class
-    GetTransactionsOccuredInClientsTimeZoneHandler : IRequestHandler<GetTransactionsOccuredInClientsTimeZoneQuery, byte
-    []>
+public class GetTransactionsOccuredInClientsTimeZoneHandler :
+    IRequestHandler<GetTransactionsOccuredInClientsTimeZoneQuery, byte[]>
 {
     private readonly ICsvHelperService _csvHelperService;
     private readonly ITransactionRecordsService _transactionRecordsService;
@@ -24,6 +23,6 @@ public class
         var transactionsRecords = await _transactionRecordsService
             .GetTransactionsOccuredInClientsTimeZone(request.Year, request.Month);
 
-        return _csvHelperService.WriteToCsv(transactionsRecords, new TransactionInClientsTimeZoneWriteMap());
+        return await _csvHelperService.WriteToCsvAsync(transactionsRecords, new TransactionInClientsTimeZoneWriteMap());
     }
 }
