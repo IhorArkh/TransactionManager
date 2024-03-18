@@ -28,7 +28,7 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddControllers();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                       throw new ApplicationException("Connection string is null.");
+                       throw new InvalidOperationException("Connection string not found.");
 builder.Services.AddDataServices(connectionString);
 
 builder.Services.AddMediatR(x =>
@@ -39,7 +39,7 @@ builder.Services.AddScoped<ITransactionRecordsService, TransactionRecordsService
 builder.Services.AddScoped<ITimeZoneService, TimeZoneService>();
 
 string ipInfoToken = builder.Configuration["IpInfoToken"] ??
-                     throw new ApplicationException("Connection string is null.");
+                     throw new InvalidOperationException("IpInfoToken not found.");
 builder.Services.AddScoped<ILocationService>(provider => new LocationService(ipInfoToken));
 
 var app = builder.Build();
