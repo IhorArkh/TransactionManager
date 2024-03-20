@@ -53,7 +53,7 @@ public class TransactionRecordController : ControllerBase
     /// Get CSV file with transactions occured in your time zone  by year or month.
     /// </summary>
     /// <response code="200">Returns file with filtered transactions if any exists.</response>
-    /// /// <response code="400">If occurs error during getting your location coordinates.</response>
+    /// <response code="400">If occurs error during getting your location coordinates.</response>
     [HttpGet("inUsersTimeZone/{year}/{month}")]
     public async Task<IActionResult> GetTransactionsOccuredInUsersTimeZoneQuery(int year, int month = default)
     {
